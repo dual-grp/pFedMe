@@ -1,4 +1,4 @@
-from sklearn.datasets import fetch_mldata
+#from sklearn.datasets import fetch_openml
 from tqdm import trange
 import numpy as np
 import random

@@ -129,5 +129,10 @@ To produce results in the table of fine-tune parameter:
     python3 main.py --dataset Synthetic --model dnn --batch_size 20 --learning_rate 0.01 --beta 0.001  --num_global_iters 600 --local_epochs 20 --algorithm PerAvg --numusers 10 --times 10
     </code></pre>
 
+- CIFAR10:
+    <pre><code>
+    python3 main.py --dataset Cifar10 --model cnn --batch_size 20 --learning_rate 0.005 --personal_learning_rate 0.1 --beta 1 --lamda 15 --num_global_iters 600 --local_epochs 20 --algorithm pFedMe --numusers 5 --times 10
+    </code></pre>
+    
 ## Effect of hyper-parameters:
 For all the figures for effect of hyper-parameters, we use Mnist dataset and fix the learning_rate == 0.005 and personal_learning_rate == 0.09 for all experiments. Other parameters are changed according to the experiments. Only in the experiments for the effects of $\beta$, in case $\beta = 4$, we use learning_rate == 0.003 to stable the algorithm.

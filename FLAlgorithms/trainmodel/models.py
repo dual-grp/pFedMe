@@ -13,6 +13,7 @@ class Net(nn.Module):
         self.fc2 = nn.Linear(128, 10)
 
     def forward(self, x):
+        # print("Net => forward()")
         x = self.conv1(x)
         x = nn.ReLU()(x)
         x = nn.MaxPool2d(2, 1)(x)
@@ -34,6 +35,8 @@ class Mclr_Logistic(nn.Module):
         self.fc1 = nn.Linear(input_dim, output_dim)
 
     def forward(self, x):
+        # print("MCLR_Logistic => forward()")
+        print(x.shape)
         x = torch.flatten(x, 1)
         x = self.fc1(x)
         output = F.log_softmax(x, dim=1)
@@ -45,6 +48,7 @@ class Mclr_CrossEntropy(nn.Module):
         self.linear = torch.nn.Linear(input_dim, output_dim)
 
     def forward(self, x):
+        # print("MCLR_CrossEntropy => forward()")
         x = torch.flatten(x, 1)
         outputs = self.linear(x)
         return outputs
@@ -57,6 +61,7 @@ class DNN(nn.Module):
         self.fc2 = nn.Linear(mid_dim, output_dim)
         
     def forward(self, x):
+        # print("DNN => forward()")
         # define forward pass
         x = torch.flatten(x, 1)
         x = F.relu(self.fc1(x))
@@ -75,6 +80,7 @@ class CifarNet(nn.Module):
         self.fc3 = nn.Linear(84, 10)
 
     def forward(self, x):
+        # print("CifarNet => forward()")
         x = self.pool(F.relu(self.conv1(x)))
         x = self.pool(F.relu(self.conv2(x)))
         x = x.view(-1, 16 * 5 * 5)
@@ -107,6 +113,7 @@ class VGG(nn.Module):
         )
 
     def forward(self, x):
+        # print("VGG => forward()")
         out = self.features(x)
         out = out.view(out.size(0), -1)
         out = self.classifier(out)

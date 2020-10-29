@@ -11,11 +11,11 @@ from FLAlgorithms.servers.serverpFedMe import pFedMe
 from FLAlgorithms.servers.serverperavg import PerAvg
 from FLAlgorithms.trainmodel.models import *
 from utils.plot_utils import *
+
 import torch
 torch.manual_seed(0)
 
-def main(dataset, algorithm, model, batch_size, learning_rate, beta, lamda, num_glob_iters,
-         local_epochs, optimizer, numusers, K, personal_learning_rate, times):\
+def main(dataset, algorithm, model, batch_size, learning_rate, beta, lamda, num_glob_iters, local_epochs, optimizer, numusers, K, personal_learning_rate, times):
 
     for i in range(times):
         print("---------------Running time:------------",i)
@@ -38,6 +38,9 @@ def main(dataset, algorithm, model, batch_size, learning_rate, beta, lamda, num_
             else: 
                 model = DNN(60,20,10), model
 
+        if torch.cuda.is_available():
+            model[0].cuda()
+
         # select algorithm
         if(algorithm == "FedAvg"):
             server = FedAvg(dataset, algorithm, model, batch_size, learning_rate, beta, lamda, num_glob_iters, local_epochs, optimizer, numusers, i)
@@ -59,6 +62,8 @@ def main(dataset, algorithm, model, batch_size, learning_rate, beta, lamda, num_
     average_data(num_users=numusers, loc_ep1=local_epochs, Numb_Glob_Iters=num_glob_iters, lamb=lamda,learning_rate=learning_rate, beta = beta, algorithms=algorithm, batch_size=batch_size, dataset=dataset, k = K, personal_learning_rate = personal_learning_rate,times = times)
 
 if __name__ == "__main__":
+    print("__main__")
+
     parser = argparse.ArgumentParser()
     parser.add_argument("--dataset", type=str, default="Cifar10", choices=["Mnist", "Synthetic", "Cifar10"])
     parser.add_argument("--model", type=str, default="cnn", choices=["dnn", "mclr", "cnn"])
