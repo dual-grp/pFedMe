@@ -319,7 +319,7 @@ class Metrics(object):
         # self.params['beta'] #[0, 0.01, 4]
         # self.params['lamda'] #[1, 0.5, 30]
 
-        toWrite = [self.params['beta']] + [self.params['lamda']] + metrics['accuracies'] + metrics['train_accuracies']
+        # toWrite = [self.params['beta']] + [self.params['lamda']] + metrics['accuracies'] + metrics['train_accuracies']
         
 
         metrics_dir = os.path.join('out', self.params['dataset'], 'metrics_{}_{}_{}_{}_{}.json'.format(
@@ -332,6 +332,6 @@ class Metrics(object):
         with open(metrics_dir, 'w') as ouf:
             json.dump(metrics, ouf)
 
-        with open(os.path.join('out', "results.csv"),'a') as f:
-            writer = csv.writer(f)
-            writer.writerow(toWrite)
+        # with open(os.path.join('out', "results.csv"),'a') as f:
+        #     writer = csv.writer(f)
+        #     writer.writerow(toWrite)

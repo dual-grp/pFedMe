@@ -16,6 +16,11 @@ torch.manual_seed(0)
 
 def main(dataset, algorithm, model, batch_size, learning_rate, beta, lamda, num_glob_iters, local_epochs, optimizer, numusers, K, personal_learning_rate, times):
 
+    beta = random.randrange(0, 300, 1) / 100
+    lamda = random.randrange(1, 120, 1) / 4
+        # self.params['beta'] #[0, 3, 0.01]
+        # self.params['lamda'] #[1, 30, 0.5]
+
     for i in range(times):
         print("---------------Running time:------------",i)
         # Generate model
@@ -90,19 +95,20 @@ if __name__ == "__main__":
     print("Local Model       : {}".format(args.model))
     print("=" * 80)
 
-    main(
-        dataset=args.dataset,
-        algorithm = args.algorithm,
-        model=args.model,
-        batch_size=args.batch_size,
-        learning_rate=args.learning_rate,
-        beta = args.beta, 
-        lamda = args.lamda,
-        num_glob_iters=args.num_global_iters,
-        local_epochs=args.local_epochs,
-        optimizer= args.optimizer,
-        numusers = args.numusers,
-        K=args.K,
-        personal_learning_rate=args.personal_learning_rate,
-        times = args.times
+    for _ in range(1000):
+        main(
+            dataset=args.dataset,
+            algorithm = args.algorithm,
+            model=args.model,
+            batch_size=args.batch_size,
+            learning_rate=args.learning_rate,
+            beta = args.beta, 
+            lamda = args.lamda,
+            num_glob_iters=args.num_global_iters,
+            local_epochs=args.local_epochs,
+            optimizer= args.optimizer,
+            numusers = args.numusers,
+            K=args.K,
+            personal_learning_rate=args.personal_learning_rate,
+            times = 1
         )

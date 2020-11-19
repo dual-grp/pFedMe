@@ -76,6 +76,14 @@ def average_data(num_users=100, loc_ep1=5, Numb_Glob_Iters=10, lamb="", learning
     print("std:", np.std(max_accurancy))
     print("Mean:", np.mean(max_accurancy))
 
+
+    toWrite = [beta, lamb, np.mean(max_accurancy), np.std(max_accurancy)]
+        
+
+    with open("results.csv",'a') as f:
+        writer = csv.writer(f)
+        writer.writerow(toWrite)
+
     alg = dataset + "_" + algorithms
     alg = alg + "_" + str(learning_rate) + "_" + str(beta) + "_" + str(lamb) + "_" + str(num_users) + "u" + "_" + str(batch_size) + "b" + "_" + str(loc_ep1)
     if(algorithms == "pFedMe" or algorithms == "pFedMe_p"):
