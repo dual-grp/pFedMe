@@ -1,6 +1,7 @@
 import json
 import numpy as np
 import os
+import csv
 import torch
 import torch.nn as nn
 import torchvision
@@ -314,6 +315,13 @@ class Metrics(object):
         metrics['client_computations'] = self.client_computations
         metrics['bytes_written'] = self.bytes_written
         metrics['bytes_read'] = self.bytes_read
+
+        # self.params['beta'] #[0, 0.01, 4]
+        # self.params['lamda'] #[1, 0.5, 30]
+
+        toWrite = [self.params['beta']] + [self.params['lamda']] + metrics['accuracies'] + metrics['train_accuracies']
+        
+
         metrics_dir = os.path.join('out', self.params['dataset'], 'metrics_{}_{}_{}_{}_{}.json'.format(
             self.params['seed'], self.params['optimizer'], self.params['learning_rate'], self.params['num_epochs'], self.params['mu']))
         #os.mkdir(os.path.join('out', self.params['dataset']))
@@ -323,3 +331,7 @@ class Metrics(object):
             os.mkdir(os.path.join('out', self.params['dataset']))
         with open(metrics_dir, 'w') as ouf:
             json.dump(metrics, ouf)
+
+        with open(os.path.join('out', "results.csv"),'a') as f:
+            writer = csv.writer(f)
+            writer.writerow(toWrite)
