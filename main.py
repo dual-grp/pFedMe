@@ -16,10 +16,6 @@ torch.manual_seed(0)
 
 def main(dataset, algorithm, model, batch_size, learning_rate, beta, lamda, num_glob_iters, local_epochs, optimizer, numusers, K, personal_learning_rate, times):
 
-    beta = random.randrange(0, 300, 1) / 100
-    lamda = random.randrange(1, 120, 1) / 4
-        # self.params['beta'] #[0, 3, 0.01]
-        # self.params['lamda'] #[1, 30, 0.5]
 
     for i in range(times):
         print("---------------Running time:------------",i)
@@ -62,16 +58,20 @@ def main(dataset, algorithm, model, batch_size, learning_rate, beta, lamda, num_
         average_data(num_users=numusers, loc_ep1=local_epochs, Numb_Glob_Iters=num_glob_iters, lamb=lamda,learning_rate=learning_rate, beta = beta, algorithms="pFedMe_p", batch_size=batch_size, dataset=dataset, k = K, personal_learning_rate = personal_learning_rate,times = times)
     average_data(num_users=numusers, loc_ep1=local_epochs, Numb_Glob_Iters=num_glob_iters, lamb=lamda,learning_rate=learning_rate, beta = beta, algorithms=algorithm, batch_size=batch_size, dataset=dataset, k = K, personal_learning_rate = personal_learning_rate,times = times)
 
-if __name__ == "__main__":
+def doOnce():
     print("__main__")
 
+    beta = random.randrange(0, 300, 1) / 100
+    lamda = random.randrange(1, 120, 1) / 4
+        # self.params['beta'] #[0, 3, 0.01]
+        # self.params['lamda'] #[1, 30, 0.5]
     parser = argparse.ArgumentParser()
     parser.add_argument("--dataset", type=str, default="Cifar10", choices=["Mnist", "Synthetic", "Cifar10"])
     parser.add_argument("--model", type=str, default="cnn", choices=["dnn", "mclr", "cnn"])
     parser.add_argument("--batch_size", type=int, default=20)
     parser.add_argument("--learning_rate", type=float, default=0.005, help="Local learning rate")
-    parser.add_argument("--beta", type=float, default=1.0, help="Average moving parameter for pFedMe, or Second learning rate of Per-FedAvg")
-    parser.add_argument("--lamda", type=int, default=15, help="Regularization term")
+    parser.add_argument("--beta", type=float, default=beta, help="Average moving parameter for pFedMe, or Second learning rate of Per-FedAvg")
+    parser.add_argument("--lamda", type=int, default=lamda, help="Regularization term")
     parser.add_argument("--num_global_iters", type=int, default=800)
     parser.add_argument("--local_epochs", type=int, default=20)
     parser.add_argument("--optimizer", type=str, default="SGD")
@@ -95,20 +95,24 @@ if __name__ == "__main__":
     print("Local Model       : {}".format(args.model))
     print("=" * 80)
 
+    main(
+        dataset=args.dataset,
+        algorithm = args.algorithm,
+        model=args.model,
+        batch_size=args.batch_size,
+        learning_rate=args.learning_rate,
+        beta = args.beta, 
+        lamda = args.lamda,
+        num_glob_iters=args.num_global_iters,
+        local_epochs=args.local_epochs,
+        optimizer= args.optimizer,
+        numusers = args.numusers,
+        K=args.K,
+        personal_learning_rate=args.personal_learning_rate,
+        times = 1
+    )
+
+if __name__ == "__main__":
     for _ in range(1000):
-        main(
-            dataset=args.dataset,
-            algorithm = args.algorithm,
-            model=args.model,
-            batch_size=args.batch_size,
-            learning_rate=args.learning_rate,
-            beta = args.beta, 
-            lamda = args.lamda,
-            num_glob_iters=args.num_global_iters,
-            local_epochs=args.local_epochs,
-            optimizer= args.optimizer,
-            numusers = args.numusers,
-            K=args.K,
-            personal_learning_rate=args.personal_learning_rate,
-            times = 1
-        )
+        doOnce()
+    
