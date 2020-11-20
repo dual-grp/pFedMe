@@ -6,6 +6,7 @@ import argparse
 import importlib
 import random
 import os
+import csv
 from FLAlgorithms.servers.serveravg import FedAvg
 from FLAlgorithms.servers.serverpFedMe import pFedMe
 from FLAlgorithms.servers.serverperavg import PerAvg
