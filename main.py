@@ -62,7 +62,7 @@ def main(dataset, algorithm, model, batch_size, learning_rate, beta, lamda, num_
 def doOnce():
     print("__main__")
 
-    beta = random.randrange(0, 300, 1) / 100
+    beta = random.randrange(0, 250, 1) / 100
     lamda = random.randrange(1, 120, 1) / 4
         # self.params['beta'] #[0, 3, 0.01]
         # self.params['lamda'] #[1, 30, 0.5]
@@ -80,7 +80,7 @@ def doOnce():
     parser.add_argument("--numusers", type=int, default=20, help="Number of Users per round")
     parser.add_argument("--K", type=int, default=5, help="Computation steps")
     parser.add_argument("--personal_learning_rate", type=float, default=0.09, help="Persionalized learning rate to caculate theta aproximately using K steps")
-    parser.add_argument("--times", type=int, default=5, help="running time")
+    parser.add_argument("--times", type=int, default=1, help="running time")
     args = parser.parse_args()
 
     print("=" * 80)
@@ -114,6 +114,8 @@ def doOnce():
     )
 
 if __name__ == "__main__":
-    for _ in range(1000):
+    for i in range(1000):
+        seed = 1000*(i+1)
+        random.seed(seed)
         doOnce()
     
